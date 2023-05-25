@@ -29,6 +29,12 @@
           "name" : "Test Scenario",
           "time" : 2,
           "numberOfVehicles" : 5
-      }
+      },
+      {
+        "id" : 3,
+        "name" : "New Test Scenario",
+        "time" : 100,
+        "numberOfVehicles" : 7
+    }
   ]
 }

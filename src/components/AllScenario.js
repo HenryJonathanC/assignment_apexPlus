@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AllScenario = () => {
     const navigate=useNavigate()
+    const [scenarioData, setScenarioData] = useState()
+
+    const getScenarioData = async()=>{
+        axios.get('http://localhost:3001/scenario')
+        .then(res=>{
+            console.log(res.data)
+            setScenarioData(res.data)
+        })
+        .catch(err=>console.error(err))
+    }
+
+    useEffect(()=>{
+        getScenarioData()
+    },[])
 
   return (
     <div className='ml-8 mr-8'>
@@ -30,16 +45,18 @@ const AllScenario = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr className='text-center bg-hover text-black border-b'>
-                    <td className='py-2'>1</td>
-                    <td>My Scenario</td>
-                    <td>10s</td>
-                    <td>1</td>
-                    <td><AddCircleIcon /></td>
-                    <td><EditIcon /></td>
-                    <td><DeleteIcon /></td>
-                </tr>
-                <tr className='text-center bg-hover text-black border-b'>
+                {scenarioData?.map((d,i)=>{    
+                    return <tr key={i} className='text-center bg-hover text-black border-b'>
+                        <td className='py-2'>{d.id}</td>
+                        <td>{d.name}</td>
+                        <td>{d.time}s</td>
+                        <td>{d.numberOfVehicles}</td>
+                        <td><AddCircleIcon /></td>
+                        <td><EditIcon /></td>
+                        <td><DeleteIcon /></td>
+                    </tr>
+                })}
+                {/* <tr className='text-center bg-hover text-black border-b'>
                     <td className='py-2'>2</td>
                     <td>Test Scenario</td>
                     <td>2s</td>
@@ -47,7 +64,7 @@ const AllScenario = () => {
                     <td><AddCircleIcon /></td>
                     <td><EditIcon /></td>
                     <td><DeleteIcon /></td>
-                </tr>
+                </tr> */}
             </tbody>
         </table>
         {/* <div>

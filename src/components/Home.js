@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Home = () => {
   const [scenario, setScenario] = useState()
   const navigate = useNavigate()
+  const [vehicleData, setVehicleData] = useState()
 
   const scenarioSelector = (e)=>{
     setScenario(e.target.value)
     console.log(e.target.value)
   }
+
+  const getVehicleData = async() => {
+    axios.get('http://localhost:3001/vehicle')
+    .then(res=>{
+      console.log(res.data)
+      setVehicleData(res.data)
+    })
+    .catch(err=>console.log(err))
+  }
+
+  useEffect(()=>{
+    getVehicleData()
+  },[])
 
   return (
     <div className='mt-4 ml-8'>
@@ -36,17 +51,20 @@ const Home = () => {
           </tr>
         </thead>
           <tbody>
-            <tr className='text-center bg-hover text-black border-b'>
-              <td className='py-2'>1</td>
-              <td>Bus</td>
-              <td>30</td>
-              <td>215</td>
-              <td>3</td>
-              <td>Towards</td>
-              <td><EditIcon /></td>
-              <td><DeleteIcon /></td>
-            </tr>
-            <tr className='text-center bg-hover text-black border-b'>
+            {vehicleData?.map((d,i)=>{
+              {console.log(d)}
+              return <tr key={i} className='text-center bg-hover text-black border-b'>
+                <td className='py-2'>{d.id}</td>
+                <td>{d.name}</td>
+                <td>{d.x}</td>
+                <td>{d.y}</td>
+                <td>{d.speed}</td>
+                <td>{d.direction}</td>
+                <td><EditIcon /></td>
+                <td><DeleteIcon /></td>
+              </tr>
+            })}
+            {/* <tr className='text-center bg-hover text-black border-b'>
                 <td className='py-2'>2</td>
                 <td>Car</td>
                 <td>500</td>
@@ -55,7 +73,7 @@ const Home = () => {
                 <td>Backwards</td>
                 <td><EditIcon /></td>
                 <td><DeleteIcon /></td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
         <div className="mt-2 justify-end flex">
