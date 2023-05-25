@@ -1,0 +1,34 @@
+{
+  "vehicle" : [
+      {
+          "id" : 1,
+          "name" : "Bus",
+          "speed": 3,
+          "x": 30,
+          "y": 215,
+          "direction": "Towards"
+      },
+      {
+          "id" : 2,
+          "name" : "Car",
+          "speed": 5,
+          "x": 500,
+          "y": 500,
+          "direction": "Backwards"
+      }
+  ],
+  "scenario" : [
+      {
+          "id" : 1,
+          "name" : "My Scenario",
+          "time" : 10,
+          "numberOfVehicles" : 1
+      },
+      {
+          "id" : 2,
+          "name" : "Test Scenario",
+          "time" : 2,
+          "numberOfVehicles" : 5
+      }
+  ]
+}
